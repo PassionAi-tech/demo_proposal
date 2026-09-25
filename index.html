@@ -93,7 +93,7 @@ function finish(){const d=document.getElementById('date').value;const pretty=d?n
 <div class="letter">The website was the easy part. Getting to spend time together is the part I'm actually excited about.</div>
 <div class="tiny">♡ see you then ♡</div><div class="share">made with way too much effort, just for you ♡</div>
 <button class="btn" style="margin-top:20px" id="replay">replay</button>
-</section>`);document.getElementById('replay').onclick=()=>{noCount=0;pageOne()}
+</section>`);document.getElementById('replay').onclick=()=>{noCount=0;pageOne()}}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 function burst(){const b=document.getElementById('petals');for(let i=0;i<45;i++){const e=document.createElement('i');e.className='petal';e.textContent=['🌸','♡','✦','🌷'][Math.floor(Math.random()*4)];e.style.left=Math.random()*100+'vw';e.style.animationDuration=(1.7+Math.random()*1.7)+'s';e.style.animationDelay=Math.random()*.35+'s';b.appendChild(e);setTimeout(()=>e.remove(),3800)}}
 function showToast(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1700)}
