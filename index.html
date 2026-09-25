@@ -20,7 +20,7 @@ button,input{font:inherit}.app{min-height:100svh;display:grid;place-items:center
 .script{font-family:Caveat,cursive;font-size:30px;font-weight:600;line-height:1.05;color:var(--wine2)}.title{font-family:'DM Serif Display',Georgia,serif;font-size:43px;line-height:1.03;margin:12px 0 16px;color:var(--wine)}.big{font-family:Caveat,cursive;font-size:68px;line-height:.9;margin:10px 0 18px;color:#873c4d}.sub{font-size:16px;line-height:1.6;color:var(--muted);max-width:320px}.tiny{font-family:Caveat,cursive;font-size:23px;color:#ad737e;margin-top:17px}
 .character{font-size:80px;margin-bottom:8px;animation:float 2.5s ease-in-out infinite;filter:drop-shadow(0 8px 9px rgba(110,45,58,.1))}@keyframes float{50%{transform:translateY(-9px) rotate(2deg)}}
 .btn{font-family:Caveat,cursive;font-size:27px;color:var(--wine);background:#fffaf6;border:1.5px solid var(--line);border-radius:12px;padding:8px 27px;min-width:124px;cursor:pointer;box-shadow:0 5px 0 rgba(114,47,64,.1);transition:transform .2s,box-shadow .2s,background .2s}.btn:hover{transform:translateY(-3px)}.btn:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(114,47,64,.1)}.primary{background:linear-gradient(135deg,#f5d5d9,#edb5bd)}.row{display:flex;gap:13px;justify-content:center;align-items:center;margin-top:27px;width:100%;min-height:72px}
-.no{background:#fff}.no:focus{outline:none}.seal{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;margin-bottom:18px;border:1px solid #d99fa7;background:#f8dfe2;font-size:45px;box-shadow:inset 0 0 0 7px #fff5f4,0 9px 20px rgba(114,47,64,.1)}
+.no{background:#fff}.no:focus{outline:none}.no.moving{position:relative;transition:transform .7s cubic-bezier(.2,.8,.2,1)}.seal{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;margin-bottom:18px;border:1px solid #d99fa7;background:#f8dfe2;font-size:45px;box-shadow:inset 0 0 0 7px #fff5f4,0 9px 20px rgba(114,47,64,.1)}
 .reasons{width:100%;display:grid;gap:9px;margin-top:14px}.reason{padding:10px 13px;text-align:left;border-radius:12px;background:rgba(255,255,255,.62);border:1px solid rgba(142,70,87,.14);font-family:Caveat,cursive;font-size:20px;color:#7d3b4b}.letter{padding:19px 18px;margin-top:20px;border:1px solid rgba(142,70,87,.2);border-radius:15px;background:rgba(255,255,255,.55);font-family:Caveat,cursive;font-size:24px;line-height:1.22;color:#82404f;box-shadow:0 10px 25px rgba(114,47,64,.06)}
 .grid{width:100%;display:grid;gap:14px;margin-top:22px}.field{text-align:left}.field span{display:block;font-family:Caveat,cursive;font-size:22px;margin-bottom:5px}.field input{width:100%;padding:13px 14px;border:1px solid #d2a0a8;border-radius:11px;background:#fffaf8;color:var(--wine);font-size:16px;outline:none}.field input:focus{border-color:var(--wine2);box-shadow:0 0 0 3px rgba(142,70,87,.09)}
 .place{display:flex;align-items:center;gap:10px;padding:14px;border-radius:13px;background:#f8e1e3;border:1px dashed #c88b96;font-family:Caveat,cursive;font-size:26px}.place small{display:block;font:14px Georgia;color:#96636d;margin-top:2px}
@@ -55,8 +55,8 @@ function pageTwo(){go(2,()=>root.innerHTML=`
 <div class="seal">♡</div>
 <div class="script">okay... deep breath</div>
 <div class="big">I love you.</div>
-<div class="letter">I didn't want to make this a giant paragraph or a boring text. I just wanted you to know how I feel — properly.</div>
-<div class="reasons"><div class="reason">♡ You became someone I genuinely care about.</div><div class="reason">♡ Talking to you can make an ordinary day feel better.</div><div class="reason">♡ Somehow, you became really special to me.</div></div>
+<div class="letter">I kept wondering whether I should say this or just keep it to myself. But some feelings deserve to be honest about. Somewhere along the way, you became someone I genuinely care about, someone whose presence can make an ordinary day a little brighter.</div>
+<div class="reasons"><div class="reason">♡ I love the little moments we share.</div><div class="reason">♡ You became someone I look forward to talking to.</div><div class="reason">♡ I don't need a perfect reason — I just know you're special to me.</div></div>
 <button class="btn primary" style="margin-top:25px" id="next">there's more →</button>
 </section>`);document.getElementById('next').onclick=pageThree}
 function pageThree(){go(3,()=>root.innerHTML=`
@@ -64,11 +64,24 @@ function pageThree(){go(3,()=>root.innerHTML=`
 <div class="character">🧸</div>
 <div class="script">and now... the important question</div>
 <div class="title">Will you go on a date with me?</div>
-<p class="sub">No pressure at all. I mean that. I just wanted to ask you properly.</p>
-<div class="row"><button class="btn primary" id="yes">yes!! ♡</button><button class="btn no" id="no">no</button></div>
-<div class="progress">choose honestly ♡</div>
+<p class="sub">I've said what's in my heart. Now it's your choice. Whatever you say, I'll respect it. ♡</p>
+<div class="row" id="answerRow"><button class="btn primary" id="yes">yes!! ♡</button><button class="btn no moving" id="no">no</button></div>
+<div class="progress">choose honestly — no pressure ♡</div>
 </section>`);document.getElementById('yes').onclick=pageFour;document.getElementById('no').onclick=playfulNo}
-function playfulNo(){noCount++;const y=document.getElementById('yes'),n=document.getElementById('no');y.style.transform='scale('+Math.min(1+noCount*.12,1.5)+')';n.style.transform='translate('+((Math.random()*80)-40)+'px,'+((Math.random()*48)-24)+'px)';if(noCount===1)showToast('okay, I respect that ♡');if(noCount===2)showToast('no really means no — promise ♡');if(noCount>=3){n.style.transform='none';n.textContent='no ♡';y.style.transform='scale(1)';}}
+let noMover;
+function startNoMove(){
+  const n=document.getElementById('no');
+  if(!n)return;
+  let t=0;
+  noMover=setInterval(()=>{
+    t+=0.18;
+    n.style.transform='translate('+Math.sin(t)*34+'px,'+Math.cos(t*1.37)*16+'px)';
+  },80);
+}
+function playfulNo(){
+  noCount++;
+  showToast('I heard you — your choice matters ♡');
+}
 function pageFour(){burst();go(4,()=>root.innerHTML=`
 <section class="page">
 <div class="seal">🌷</div>
