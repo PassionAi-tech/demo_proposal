@@ -43,7 +43,7 @@ function setDots(){dots.innerHTML='';for(let i=1;i<=5;i++){const d=document.crea
 function go(n,fn){step=n;setDots();fn()}
 function pageOne(){go(1,()=>root.innerHTML=`
 <section class="page">
-<div class="character">🐻</div>
+<div class="character"><img src="https://raw.githubusercontent.com/PassionAi-tech/sugarcane-ecommerce-flipclass/main/bear.png" alt="cute bear" style="width:110px;height:110px;object-fit:contain"></div>
 <div class="script">hey... I made something</div>
 <div class="big">I wanted to<br>say something ♡</div>
 <p class="sub">There are some things that are much nicer to say properly than to type in a random chat.</p>
@@ -72,7 +72,8 @@ let noMover;
 function startNoMove(){
   const n=document.getElementById('no');
   if(!n)return;
-  let t=0;
+  if(noMover) clearInterval(noMover);
+  let t=Math.random()*20;
   noMover=setInterval(()=>{
     t+=0.18;
     n.style.transform='translate('+Math.sin(t)*34+'px,'+Math.cos(t*1.37)*16+'px)';
@@ -81,6 +82,7 @@ function startNoMove(){
 function playfulNo(){
   noCount++;
   showToast('I heard you — your choice matters ♡');
+  startNoMove(true);
 }
 function pageFour(){burst();go(4,()=>root.innerHTML=`
 <section class="page">
