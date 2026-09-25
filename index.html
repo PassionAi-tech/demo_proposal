@@ -23,7 +23,7 @@ button,input{font:inherit}.app{min-height:100svh;display:grid;place-items:center
 .no{background:#fff}.no:focus{outline:none}.no.moving{position:relative;transition:transform .7s cubic-bezier(.2,.8,.2,1)}.seal{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;margin-bottom:18px;border:1px solid #d99fa7;background:#f8dfe2;font-size:45px;box-shadow:inset 0 0 0 7px #fff5f4,0 9px 20px rgba(114,47,64,.1)}
 .reasons{width:100%;display:grid;gap:9px;margin-top:14px}.reason{padding:10px 13px;text-align:left;border-radius:12px;background:rgba(255,255,255,.62);border:1px solid rgba(142,70,87,.14);font-family:Caveat,cursive;font-size:20px;color:#7d3b4b}.letter{padding:19px 18px;margin-top:20px;border:1px solid rgba(142,70,87,.2);border-radius:15px;background:rgba(255,255,255,.55);font-family:Caveat,cursive;font-size:24px;line-height:1.22;color:#82404f;box-shadow:0 10px 25px rgba(114,47,64,.06)}
 .grid{width:100%;display:grid;gap:14px;margin-top:22px}.field{text-align:left}.field span{display:block;font-family:Caveat,cursive;font-size:22px;margin-bottom:5px}.field input{width:100%;padding:13px 14px;border:1px solid #d2a0a8;border-radius:11px;background:#fffaf8;color:var(--wine);font-size:16px;outline:none}.field input:focus{border-color:var(--wine2);box-shadow:0 0 0 3px rgba(142,70,87,.09)}
-.place{display:flex;align-items:center;gap:10px;padding:14px;border-radius:13px;background:#f8e1e3;border:1px dashed #c88b96;font-family:Caveat,cursive;font-size:26px}.place small{display:block;font:14px Georgia;color:#96636d;margin-top:2px}
+.place{display:flex;align-items:center;gap:10px;padding:14px;border-radius:13px;background:#f8e1e3;border:1px dashed #c88b96;font-family:Caveat,cursive;font-size:26px}.place small{display:block;font:14px Georgia;color:#96636d;margin-top:2px}.placeSelect{width:100%;padding:14px;border-radius:13px;background:#f8e1e3;border:1px dashed #c88b96;color:#7d3b4b;font-family:Caveat,cursive;font-size:25px;outline:none}
 .plan-card{width:100%;margin-top:21px;padding:18px;border-radius:17px;background:rgba(255,255,255,.63);border:1px solid rgba(142,70,87,.17);text-align:left}.plan-card strong{font-family:Caveat,cursive;font-size:25px}.plan-line{display:flex;gap:11px;align-items:center;margin:9px 0;color:#875866}
 .progress{font-family:Caveat,cursive;color:#aa707b;font-size:19px;margin-top:18px}.share{font-family:Caveat,cursive;color:#a46b76;font-size:21px;margin-top:10px}.petals{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20}.petal{position:absolute;top:-30px;font-size:18px;animation:fall linear forwards;opacity:.8}@keyframes fall{to{transform:translateY(110vh) rotate(500deg);opacity:0}}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);opacity:0;background:#6f2d3e;color:white;padding:10px 16px;border-radius:999px;font:17px Caveat,cursive;z-index:30;transition:.3s;pointer-events:none}.toast.show{opacity:1;transform:translateX(-50%)}
@@ -96,10 +96,14 @@ function pageFour(){burst();go(4,()=>root.innerHTML=`
 <p class="sub">One day, one place, no complicated stuff.</p>
 <div class="grid">
 <label class="field"><span>When?</span><input id="date" type="date"></label>
-<div class="field"><span>Where?</span><div class="place">🛕 <div><strong>Krishna Temple</strong><small>A peaceful little visit together.</small></div></div></div>
+<div class="field"><span>Where?</span><select id="placeSelect" class="placeSelect">
+<option>Krishan Temple</option>
+<option>Krishan Temple</option>
+<option>Krishna Temple</option>
+</select></div>
 </div>
 <button class="btn primary" style="margin-top:22px" id="finish">make our plan ♡</button>
-</section>`);const input=document.getElementById('date');input.min=new Date().toISOString().split('T')[0];document.getElementById('finish').onclick=finish}
+</section>`);const input=document.getElementById('date');input.min=new Date().toISOString().split('T')[0];document.getElementById('placeSelect').onchange=()=>document.getElementById('chosenPlace')&&(document.getElementById('chosenPlace').textContent=document.getElementById('placeSelect').value);document.getElementById('finish').onclick=finish}
 function finish(){const d=document.getElementById('date').value;const pretty=d?new Date(d+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'}):'a day we choose together';burst();go(5,()=>root.innerHTML=`
 <section class="page">
 <div class="seal">💗</div>
@@ -107,7 +111,7 @@ function finish(){const d=document.getElementById('date').value;const pretty=d?n
 <div class="big" style="font-size:55px">It's a date ♡</div>
 <div class="plan-card">
 <div class="plan-line">📅 <span><strong>${esc(pretty)}</strong></span></div>
-<div class="plan-line">🛕 <span><strong>Krishna Temple</strong></span></div>
+<div class="plan-line">🛕 <span><strong id="chosenPlace">Krishna Temple</strong></span></div>
 </div>
 <div class="letter">The website was the easy part. Getting to spend time together is the part I'm actually excited about.</div>
 <div class="tiny">♡ see you then ♡</div><div class="share">made with way too much effort, just for you ♡</div>
