@@ -68,21 +68,23 @@ function pageThree(){go(3,()=>root.innerHTML=`
 <div class="row" id="answerRow"><button class="btn primary" id="yes">yes!! ♡</button><button class="btn no moving" id="no">no</button></div>
 <div class="progress">choose honestly — no pressure ♡</div>
 </section>`);document.getElementById('yes').onclick=pageFour;document.getElementById('no').onclick=playfulNo}
-let noMover;
+let noMover=null;
+const noTexts=['no','pleaseee','again?','really 😭','are you sure?','okay... I respect it ♡'];
 function startNoMove(){
+  if(noMover){clearInterval(noMover);noMover=null;}
   const n=document.getElementById('no');
-  if(!n)return;
-  if(noMover) clearInterval(noMover);
-  let t=Math.random()*20;
-  noMover=setInterval(()=>{
-    t+=0.18;
-    n.style.transform='translate('+Math.sin(t)*34+'px,'+Math.cos(t*1.37)*16+'px)';
-  },80);
+  if(n)n.style.transform='none';
 }
 function playfulNo(){
   noCount++;
-  showToast('I heard you — your choice matters ♡');
-  startNoMove(true);
+  const n=document.getElementById('no');
+  if(!n)return;
+  n.textContent=noTexts[Math.min(noCount,noTexts.length-1)];
+  if(noCount<noTexts.length-1){
+    showToast(noTexts[Math.min(noCount,noTexts.length-1)]);
+  }else{
+    showToast('your choice matters ♡');
+  }
 }
 function pageFour(){burst();go(4,()=>root.innerHTML=`
 <section class="page">
