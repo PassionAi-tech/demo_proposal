@@ -78,13 +78,15 @@ function startNoMove(){
 function playfulNo(){
   noCount++;
   const n=document.getElementById('no');
-  if(!n)return;
+  const y=document.getElementById('yes');
+  if(!n||!y)return;
+  const scaleNo=Math.max(0.62,1-(noCount*0.09));
+  const scaleYes=Math.min(1.65,1+(noCount*0.12));
+  n.style.transform='scale('+scaleNo+')';
+  y.style.transform='scale('+scaleYes+')';
+  n.style.opacity=Math.max(0.72,1-(noCount*0.045));
   n.textContent=noTexts[Math.min(noCount,noTexts.length-1)];
-  if(noCount<noTexts.length-1){
-    showToast(noTexts[Math.min(noCount,noTexts.length-1)]);
-  }else{
-    showToast('your choice matters ♡');
-  }
+  showToast(noCount<4?'pleaseee? ♡':'I really like you ♡');
 }
 function pageFour(){burst();go(4,()=>root.innerHTML=`
 <section class="page">
